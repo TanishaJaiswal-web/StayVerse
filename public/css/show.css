@@ -1,0 +1,237 @@
+/* Show page  */
+
+.show-card {
+    width: 100% !important;
+}
+
+.show-img-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+     border-radius: 10px !important;
+}
+
+.heart-overlay {
+    position: absolute;
+    top: 2px;
+    right: 14px;
+    z-index: 20;
+}
+
+.heart-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease !important;
+}
+
+.heart-button:hover {
+   transform: scale(1.08);
+    background: rgba(0, 0, 0, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.heart-button i {
+    font-size: 25px;
+    transition: color 0.2s ease;
+}
+
+.heart-button .fa-regular {
+    color: #ffffff;
+    
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.heart-button .fa-solid {
+    color: #ff385c; 
+    animation: heartPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.heart-button:hover .fa-regular {
+    color: #ffffff !important;
+}
+
+.heart-button:hover .fa-solid {
+    color: #ff385c !important;
+}
+
+@keyframes heartPop {
+    0% { transform: scale(0.8); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+.tool-tip {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px); 
+    background: linear-gradient(135deg, #ff385c 0%, #e00b41 100%);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    padding: 6px 14px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(255, 56, 92, 0.35);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    /* pointer-events: none; */
+}
+
+.tool-tip::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    right: 14px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #ff385c transparent;
+}
+
+.heart-button:hover .tool-tip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.show-img {
+    object-fit: cover !important;
+    object-position: center;
+    width: 100%;
+    height: 200px !important;
+}
+
+@media (min-width: 768px) {
+    .show-img {
+        height: 280px !important;
+    }
+}
+
+#map {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px !important;
+}
+
+@media (min-width: 768px) {
+    #map {
+        height: 280px;
+    }
+}
+
+.btns {
+    display: flex;
+}
+
+.show-btns
+{
+    padding-left: 1.5em !important;
+    padding-right: 1.5em !important;
+}
+
+
+ /* review delete button */
+.btn-xs{
+    padding-left: 1.5em !important;
+    padding-right: 1.5em !important;
+    font-size: 10px !important;
+}
+
+/* delete  popup */
+
+.pop-up {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  display: none;
+}
+
+
+.pop-up-box {
+  background-color: #ffffff;
+  color: #1f2937;
+  width: 100%;
+  max-width: 440px;
+  padding: 2em;
+  border-radius: 16px;
+  border-top: 5px solid #e05a47; 
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+
+.pop-up-box h3,
+.pop-up-box h2 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.pop-up-box p {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin-bottom: 1.75em;
+  line-height: 1.5;
+}
+
+.pop-up-box .button-group {
+  display: flex;
+  justify-content: center;
+  gap: 0.75em;
+}
+
+.pop-up-box button {
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.6em 1.5em;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.pop-up-box button.btn-cancel {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  border: 1px solid #d1d5db;
+}
+
+.pop-up-box button.btn-cancel:hover {
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+.pop-up-box button.btn-delete {
+  background-color: #e05a47;
+  color: #ffffff;
+  border: 1px solid #e05a47;
+  box-shadow: 0 4px 6px -1px rgba(224, 90, 71, 0.3);
+}
+
+.pop-up-box button.btn-delete:hover {
+  background-color: #c84b39;
+  border-color: #c84b39;
+  box-shadow: 0 6px 8px -1px rgba(224, 90, 71, 0.4);
+}

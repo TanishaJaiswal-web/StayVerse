@@ -1,0 +1,106 @@
+<nav class="navbar navbar-expand-md bg-body-terlight border-bottom sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/listings"><i class="fa-brands fa-staylinked"></i></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" href="/listings">Explore</a>
+      </div>
+
+      <!-- search bar -->
+<div class="ms-auto">
+  <form class="d-flex search-form" role="search" action="/listings">
+
+    <div class="search-wrapper">
+
+      <input
+        class="form-control me-2 search-inp"
+        id="searchInput"
+        type="search"
+        placeholder="Search destination"
+        aria-label="Search"
+        autocomplete="off"
+        name="query"
+      />
+
+      <!-- Search options box -->
+      <div class="search-options" id="searchOptions">
+
+        <div class="search-option">
+          <i class="fa-solid fa-location-dot"></i>
+          <div>
+            <strong>Jaipur, Rajasthan</strong>
+            <small>India</small>
+          </div>
+        </div>
+
+        <div class="search-option">
+          <i class="fa-solid fa-city"></i>
+          <div>
+            <strong>Delhi</strong>
+            <small>India</small>
+          </div>
+        </div>
+
+        <div class="search-option">
+          <i class="fa-solid fa-city"></i>
+          <div>
+            <strong>Mumbai</strong>
+            <small>India</small>
+          </div>
+        </div>
+
+        <div class="search-option">
+          <i class="fa-solid fa-mountain-sun"></i>
+          <div>
+            <strong>Manali</strong>
+            <small>Himachal Pradesh</small>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+<!-- onclick="search(event)" -->
+    <button  class="btn search-btn" type="submit">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+
+  </form>
+</div>
+
+
+
+      <div class="navbar-nav nav-actions ms-auto">
+         <a class="nav-link" href="/listings/new">StayVerse your place</a>
+        <% if(!currUser){ %>
+          <a class="nav-link " href="/signup"><b>Sign up</b></a>
+          <a class="nav-link" href="/login"><b>Log in</b></a>
+          <% } %>
+            <% if(currUser){ %>
+              <a class="nav-link" href="/logout"><b>Log out</b></a>
+              <% } %>
+
+
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const links= document.querySelectorAll(".navbar-nav .nav-link");
+  for( const link of links){
+     if(link.href === window.location.href  ){
+      link.style.borderBottom= "2px solid #E05A47";
+     }
+    
+  }
+</script>
+
+
+
+
+

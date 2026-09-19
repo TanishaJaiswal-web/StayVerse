@@ -1,0 +1,133 @@
+body {
+    font-family: system-ui, -apple-system, sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+.container {
+    flex: 1;
+}
+
+
+
+
+/* footer */
+.f-info {
+    height: 6rem;
+    background-color: #ebebeb;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.f-info-links a {
+    text-decoration: none;
+    color: #222222;
+
+}
+
+.f-info-links a:hover {
+    text-decoration: underline;
+}
+
+.f-info-socials,
+.f-info-links {
+    text-align: center;
+    width: 100%;
+    display: flex;
+    display: flex;
+    vertical-align: middle;
+    justify-content: center;
+
+
+}
+
+.f-info-socials i {
+    font-size: 1.1rem;
+    margin-left: 0.5rem;
+}
+
+/* carda */
+
+.listing-card,
+.show-card {
+    border: none !important;
+    margin-bottom: 2.5rem !important;
+}
+
+.card-img-top {
+    border-radius: 12px !important;
+    height: 15rem;
+    width: 100%;
+    object-fit: cover !important;
+}
+
+.card-body {
+    padding: 0 !important;
+}
+
+.card-text {
+    font-weight: 400 !important;
+}
+
+.listing-link {
+    text-decoration: none;
+}
+
+/* overlay effect */
+.card-img-overlay {
+    opacity: 0;
+}
+
+.card-img-overlay:hover {
+    opacity: 0.2;
+    background-color: #fff;
+}
+
+/* New page */
+.add-btn {
+    border: none !important;
+    background-color: #E05A47 !important;
+    padding-left: 1.5em !important;
+    padding-right: 1.5em !important;
+}
+
+
+/* Edit page */
+.edit-btn {
+    border: none !important;
+    background-color: #E05A47 !important;
+}
+
+
+
+/* hide spin buttons */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    display: none;
+}
+
+
+
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form input[type="file"]:focus,
+form input[type="password"]:focus,
+form input[type="email"]:focus,
+form textarea:focus
+{
+    
+      border-color: #E05A47 !important;
+      outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(224, 90, 71, 0.25) !important;
+}
+
+
+
+
