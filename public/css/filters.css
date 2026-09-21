@@ -1,59 +1,103 @@
 
-    .filters-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        gap: 1.5rem;
-        padding: 0.5rem 0;
-    }
 
-    #filters {
-        display: flex;
-        align-items: center;
-        overflow-x: auto;
-        white-space: nowrap;
-        flex: 1;
+.filters-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1.5rem;
+    padding: 0.5rem 0;
+}
+
+
+#filters {
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    white-space: nowrap;
+    flex: 1;
+
+}
+
+
+.filter,
+.filter-sign {
+    flex: 0 0 auto;
+    text-align: center;
+    margin-right: 2rem;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    padding: 0.25rem 0; 
+}
+
+.filter:hover,
+.filter-sign:hover {
+    opacity: 1;
+}
+
+.filter p,
+.filter-sign p {
+    font-size: 0.8rem;
+    margin-bottom: 0;
+    margin-top: 0.25rem;
+}
+
+.filter-more {
+    flex: 0 0 auto;
+    margin-right: 0;
+}
+
+.tax-toggle {
+    border: 1px solid #717171;
+    border-radius: 1rem;
+    padding: 0.6rem 1rem;
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+}
+
+.tax-info {
+    display: none;
+}
+
+.filter-selected {
+    border-bottom: 2px solid #E05A47;
+    opacity: 1; /* Keep active filter fully visible */
+}
+
+
+
+/* Tablets & Mobile Screens (< 768px) */
+@media (max-width: 768px) {
+    .filters-wrapper {
+        gap: 0.75rem;
     }
 
     .filter,
     .filter-sign {
-        flex: 0 0 auto;
-        text-align: center;
-        margin-right: 2rem;
-        opacity: 0.7;
-        cursor: pointer;
-        transition: opacity 0.2s ease;
-    }
-
-    .filter:hover,
-    .filter-sign:hover {
-        opacity: 1;
-    }
-
-    .filter p,
-    .filter-sign p {
-        font-size: 0.8rem;
-        margin-bottom: 0;
-        margin-top: 0.25rem;
-    }
-
-    .filter-more {
-        flex: 0 0 auto;
-        margin-right: 0;
+        margin-right: 1.25rem; 
     }
 
     .tax-toggle {
-        border: 1px solid #717171;
-        border-radius: 1rem;
-        padding: 0.6rem 1rem;
-        display: flex;
-        align-items: center;
-        flex: 0 0 auto;
+        padding: 0.4rem 0.75rem;
+        font-size: 0.85rem;
     }
-       .tax-info{
-        display: none;
+}
+
+/* Extra Small Mobile Screens (< 576px) */
+@media (max-width: 576px) {
+    .filters-wrapper {
+        flex-wrap: wrap; 
     }
-    .filter-selected{
-  border-bottom: 2px solid #E05A47;
+
+    #filters {
+        width: 100%;
+    }
+
+    .tax-toggle {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 0.25rem;
+    }
 }

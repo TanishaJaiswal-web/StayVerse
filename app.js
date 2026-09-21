@@ -19,6 +19,7 @@ const engine = require('ejs-mate');
 const listingsRouter= require("./routes/listing.js");
 const reviewsRouter= require("./routes/review.js");
 const usersRouter= require("./routes/user.js");
+const footerRouter= require("./routes/footer.js");
 const session =require("express-session");
 const {MongoStore,createWebCryptoAdapter} = require('connect-mongo');
 const flash= require("connect-flash");
@@ -105,6 +106,7 @@ async function main() {
 app.use("/listings",listingsRouter);
 app.use("/listings/:id/reviews",reviewsRouter);
 app.use("/",usersRouter);
+app.use("/",footerRouter);
 
 
 app.use((req, res, next) => {

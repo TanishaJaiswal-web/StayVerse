@@ -1,10 +1,12 @@
 const searchInput = document.getElementById("searchInput");
 const searchOptionBox = document.getElementById("searchOptions");
 const searchButton = document.querySelector(".search-btn");
+const flashContainer = document.getElementById("flash-container");
 
 // AJAX fetch function
 async function updateListings(params) {
     const searchUrl = `/listings?${params.toString()}`;
+    console.log("Request URL:", searchUrl);
 
     try {
         const response = await fetch(searchUrl, {
@@ -13,20 +15,35 @@ async function updateListings(params) {
             }
         });
 
-        // Handle JSON response
-        const contentType = response.headers.get("content-type");
-        if (contentType && contentType.includes("application/json")) {
+        const contentType = response.headers.get("content-type") || "";
+        const container = document.getElementById("listings-container");
+
+        if (contentType.includes("application/json")) {
             const data = await response.json();
-            if (data.redirect) {
-                window.location.href = data.redirect;
+
+          
+            if (!data.success) {
+                // Display flash message
+                showFlashMessage(data.message);
+
+                // Clear old listings from the container on no results
+                if (container) {
+                    container.innerHTML = "";
+                }
+
+                // Update URL even when no results are found
+                window.history.pushState({}, "", searchUrl);
                 return;
             }
         }
 
-        // Render only carfds/listings
+        // If successful HTML response, clear flash messages
+        if (flashContainer) {
+            flashContainer.innerHTML = "";
+        }
+
         const partialHTML = await response.text();
-        const container = document.getElementById("listings-container");
-        
+
         if (container) {
             container.innerHTML = partialHTML;
             window.history.pushState({}, "", searchUrl);
@@ -39,7 +56,7 @@ async function updateListings(params) {
     }
 }
 
-//  search
+// Perform search while preserving active filters
 const performSearch = () => {
     const searchParams = new URLSearchParams(window.location.search);
     const queryVal = searchInput ? searchInput.value.trim() : "";
@@ -49,10 +66,15 @@ const performSearch = () => {
     } else {
         searchParams.delete("query");
     }
+
+    if (searchOptionBox) {
+        searchOptionBox.style.display = "none";
+    }
+
     updateListings(searchParams);
 };
 
-// Search button click handler
+// 1. Search button click handler
 if (searchButton) {
     searchButton.addEventListener("click", (e) => {
         e.preventDefault();
@@ -60,37 +82,58 @@ if (searchButton) {
     });
 }
 
-// Display search option box on focus
-searchInput?.addEventListener("focus", () => {
-    searchOptionBox.style.display = "block";
-});
+// 2. Handle Enter key inside search input
+if (searchInput) {
+    searchInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            performSearch();
+        }
+    });
 
-// Hide search option box when clicking outside
-document.addEventListener("click", (event) => {
-    if (!event.target.closest(".search-wrapper")) {
-        searchOptionBox.style.display = "none";
-    }
-});
+    searchInput.addEventListener("focus", () => {
+        if (searchOptionBox && searchOptionBox.children.length > 0) {
+            searchOptionBox.style.display = "block";
+        }
+    });
+}
 
-// Static Search Options Auto-Search
-const searchOptions = document.getElementsByClassName("search-option");
-for (const option of searchOptions) {
-    option.addEventListener("click", () => {
+// 3. Event Delegation for Search Options
+if (searchOptionBox) {
+    searchOptionBox.addEventListener("click", (e) => {
+        const option = e.target.closest(".search-option");
+        if (!option) return;
+
         const strongText = option.querySelector("strong")?.innerText || "";
         const smallText = option.querySelector("small")?.innerText || "";
+        const selectedValue = option.dataset.value || (smallText ? `${strongText}, ${smallText}` : strongText);
 
-        searchInput.value = smallText ? `${strongText}, ${smallText}` : strongText;
+        if (searchInput) {
+            searchInput.value = selectedValue;
+        }
+
         searchOptionBox.style.display = "none";
         performSearch();
     });
 }
 
-//  Autocomplete Auto-Search
+// Hide search option box when clicking outside
+document.addEventListener("click", (event) => {
+    if (!event.target.closest(".search-wrapper")) {
+        if (searchOptionBox) {
+            searchOptionBox.style.display = "none";
+        }
+    }
+});
+
+// Autocomplete Auto-Search via MapTiler
 searchInput?.addEventListener("input", async () => {
     const query = searchInput.value.trim();
 
     if (query.length <= 2) {
-        searchOptionBox.style.display = "none";
+        if (searchOptionBox) {
+            searchOptionBox.style.display = "none";
+        }
         return;
     }
 
@@ -100,8 +143,9 @@ searchInput?.addEventListener("input", async () => {
             limit: 5
         });
 
+        if (!searchOptionBox) return;
+
         searchOptionBox.innerHTML = "";
-        searchOptionBox.style.display = "none";
 
         if (result.features && result.features.length > 0) {
             searchOptionBox.style.display = "block";
@@ -110,35 +154,43 @@ searchInput?.addEventListener("input", async () => {
                 const option = document.createElement("div");
                 option.className = "search-option";
 
+                const mainText = feature.text || "Popular destinations";
+                const subText = feature.place_name || "Explore popular stays";
+                option.dataset.value = feature.place_name || feature.text || "";
+
                 option.innerHTML = `
                     <i class="fa-solid fa-location-dot"></i>
                     <div>
-                        <strong>${feature.text || "Popular destinations"}</strong>
-                        <small>${feature.place_name || "Explore popular stays"}</small>
+                        <strong>${mainText}</strong>
+                        <small>${subText}</small>
                     </div>
                 `;
 
-                option.addEventListener("click", () => {
-                    searchInput.value = feature.place_name || feature.text;
-                    searchOptionBox.style.display = "none";
-                    performSearch();
-                });
-
                 searchOptionBox.appendChild(option);
             });
+        } else {
+            searchOptionBox.style.display = "none";
         }
+
     } catch (error) {
-        searchOptionBox.innerHTML = "";
-        searchOptionBox.style.display = "none";
+        console.error("Autocomplete error:", error);
+        if (searchOptionBox) {
+            searchOptionBox.innerHTML = "";
+            searchOptionBox.style.display = "none";
+        }
     }
 });
 
+// Category Filters logic
 const filters = document.querySelectorAll(".filter");
 
 filters.forEach((filter) => {
-    const categoryName = filter.querySelector("p").innerText.trim();
+    const categoryElement = filter.querySelector("p");
+    if (!categoryElement) return;
+
+    const categoryName = categoryElement.innerText.trim();
     const initialParams = new URLSearchParams(window.location.search);
-    
+
     if (initialParams.getAll("category").includes(categoryName)) {
         filter.classList.add("filter-selected");
     }
@@ -155,8 +207,26 @@ filters.forEach((filter) => {
             filter.classList.add("filter-selected");
         }
 
+        // Maintain active search input term when clicking filters
+        if (searchInput && searchInput.value.trim()) {
+            urlParams.set("query", searchInput.value.trim());
+        }
+
         urlParams.delete("category");
         selectedCategories.forEach(cat => urlParams.append("category", cat));
+
         updateListings(urlParams);
     });
 });
+
+// Flash Message helper
+function showFlashMessage(message) {
+    if (!flashContainer) return;
+
+    flashContainer.innerHTML = `
+        <div class="alert alert-danger alert-dismissible fade show col-6 offset-3 w-50 mt-2" role="alert">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+}

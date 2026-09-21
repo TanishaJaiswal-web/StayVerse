@@ -1,7 +1,31 @@
+<style>
+    #flash-container{
+        width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    }
+</style>
+
+
 <% layout('/layouts/boilerplate') -%>
+<script>
+    document.addEventListener("DOMContentLoaded",()=>{
+  const globalflashContainer= document.querySelector(".globalflash-container");
+     globalflashContainer.innerHTML=" ";
+    });
+  
+
+</script>
 
 <div class="filters-wrapper">
     <%- include("../includes/filters.ejs") %>
+</div>
+
+<div id="flash-container">
+     <%- include("../includes/flash.ejs") %>
 </div>
 
 <div id="listings-container">

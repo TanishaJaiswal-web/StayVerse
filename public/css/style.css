@@ -26,7 +26,8 @@ body {
     align-items: center;
 }
 
-.f-info-links a {
+.f-info-links a,
+ .f-info a{
     text-decoration: none;
     color: #222222;
 
