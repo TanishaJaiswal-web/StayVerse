@@ -81,7 +81,7 @@ StayVerse/
    node init/index.js
    ```
 
-4. Start the server and open http://localhost:8080:
+4. Start the server and open http://localhost:3000:
 
    ```bash
    node app.js
